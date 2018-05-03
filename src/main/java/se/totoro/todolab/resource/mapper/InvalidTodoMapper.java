@@ -1,6 +1,6 @@
-package se.totoro.todoLab.resource.mapper;
+package se.totoro.todolab.resource.mapper;
 
-import se.totoro.todoLab.service.exceptions.InvalidTodoException;
+import se.totoro.todolab.service.exceptions.InvalidTodoException;
 
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;

@@ -1,4 +1,4 @@
-package se.totoro.todoLab;
+package se.totoro.todolab;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

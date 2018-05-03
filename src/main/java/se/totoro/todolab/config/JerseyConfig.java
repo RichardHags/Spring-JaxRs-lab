@@ -1,4 +1,4 @@
-package se.totoro.todoLab.config;
+package se.totoro.todolab.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class JerseyConfig extends ResourceConfig{
 
     public JerseyConfig(){
-        packages("se.totoro.todoLab.resource");
+        packages("se.totoro.todolab.resource");
     }
 
     @Bean

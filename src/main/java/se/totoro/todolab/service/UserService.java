@@ -1,9 +1,9 @@
-package se.totoro.todoLab.service;
+package se.totoro.todolab.service;
 
 import org.springframework.stereotype.Service;
-import se.totoro.todoLab.model.User;
-import se.totoro.todoLab.repository.UserRepository;
-import se.totoro.todoLab.service.exceptions.InvalidUserException;
+import se.totoro.todolab.model.User;
+import se.totoro.todolab.repository.UserRepository;
+import se.totoro.todolab.service.exceptions.InvalidUserException;
 
 import java.util.ArrayList;
 import java.util.List;

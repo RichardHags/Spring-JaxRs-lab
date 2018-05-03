@@ -1,8 +1,8 @@
-package se.totoro.todoLab.resource;
+package se.totoro.todolab.resource;
 
 import org.springframework.stereotype.Component;
-import se.totoro.todoLab.model.User;
-import se.totoro.todoLab.service.UserService;
+import se.totoro.todolab.model.User;
+import se.totoro.todolab.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -54,7 +54,7 @@ public final class UserResource {
     }
 
     @DELETE
-    @Path("{id]")
+    @Path("{id}")
     public Response deleteUser(@PathParam("id") Long id){
 
         return service.deleteUserById(id)

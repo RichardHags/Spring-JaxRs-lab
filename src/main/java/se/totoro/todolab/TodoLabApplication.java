@@ -1,4 +1,4 @@
-package se.totoro.todoLab;
+package se.totoro.todolab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package se.totoro.todoLab.service.exceptions;
+package se.totoro.todolab.service.exceptions;
 
 public final class InvalidUserException extends RuntimeException{
 

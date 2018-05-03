@@ -1,13 +1,17 @@
-package se.totoro.todoLab.resource;
+package se.totoro.todolab.resource;
 
 import org.springframework.stereotype.Component;
-import se.totoro.todoLab.model.Todo;
-import se.totoro.todoLab.service.TodoService;
+import se.totoro.todolab.model.Todo;
+import se.totoro.todolab.service.TodoService;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.*;
@@ -48,8 +52,16 @@ public final class TodoResource {
     }
 
     @GET
-    public Response getAllTodos(){
-        return Response.ok(service.getAllTodos()).build();
+    public Response getAllTodos(@QueryParam("user") Long userId, @QueryParam("priority") Integer priority) {
+        List<Todo> todos = service.getAllTodos();
+        if(userId == null) {
+            return Response.ok(todos).build();
+        }
+
+        Stream<Todo> todoStream = todos.stream()
+                .filter(todo -> todo.getUser() != null)
+                .filter(todo -> todo.getUser().getId().equals(userId));
+        return Response.ok(todoStream.collect(Collectors.toList())).build();
     }
 
 
@@ -75,7 +87,7 @@ public final class TodoResource {
 
     @DELETE
     @Path("{id}")
-    public Response deleteTodo(@PathParam("id") Long id){
+    public Response deleteTodo(@PathParam("id") Long id) {
         return service.deleteTodoById(id)
                 .map(t -> Response.status(NO_CONTENT))
                 .orElse(Response.status(NOT_FOUND))
@@ -84,7 +96,7 @@ public final class TodoResource {
 
     @PUT
     @Path("{id}")
-    public Response assignUserToTodo(@QueryParam("user") @DefaultValue("0") Long userId, @PathParam("id") Long id){
+    public Response assignUserToTodo(@QueryParam("user") @NotNull Long userId, @PathParam("id") Long id) {
         return service.assignUserToTodo(id, userId)
                 .map(t -> Response.status(NO_CONTENT))
                 .orElse(Response.status(NOT_FOUND))

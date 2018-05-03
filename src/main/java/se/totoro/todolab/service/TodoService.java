@@ -1,10 +1,11 @@
-package se.totoro.todoLab.service;
+package se.totoro.todolab.service;
 
 import org.springframework.stereotype.Service;
-import se.totoro.todoLab.model.Todo;
-import se.totoro.todoLab.model.User;
-import se.totoro.todoLab.repository.TodoRepository;
-import se.totoro.todoLab.service.exceptions.InvalidTodoException;
+import se.totoro.todolab.model.Todo;
+import se.totoro.todolab.model.User;
+import se.totoro.todolab.repository.TodoRepository;
+import se.totoro.todolab.repository.UserRepository;
+import se.totoro.todolab.service.exceptions.InvalidTodoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.Optional;
 public final class TodoService {
 
     private final TodoRepository repository;
+    private final UserRepository userRepository;
 
-    public TodoService (TodoRepository repository){
+    public TodoService (TodoRepository repository, UserRepository userRepository){
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     public Todo createTodo(Todo todo){
@@ -51,7 +54,7 @@ public final class TodoService {
     }
 
     public Optional<Todo> assignUserToTodo(Long id, Long userId){
-        Optional<User> user = repository.getByUserId(userId);
+        Optional<User> user = userRepository.findById(userId);
         Optional<Todo> todo = repository.findById(id);
 
         if(user.isPresent() && todo.isPresent()){

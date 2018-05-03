@@ -1,4 +1,7 @@
-package se.totoro.todoLab.model;
+package se.totoro.todolab.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,6 +19,7 @@ public final class User {
     private String lastName;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Collection<Todo> todos;
 
     protected User() {
