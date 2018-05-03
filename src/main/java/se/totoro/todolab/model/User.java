@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 
 @Entity
@@ -13,8 +14,10 @@ public final class User {
     @GeneratedValue
     private Long id;
 
+    //@NotEmpty
     @Column(nullable = false)
     private String firstName;
+    //@NotEmpty
     @Column(nullable = false)
     private String lastName;
 

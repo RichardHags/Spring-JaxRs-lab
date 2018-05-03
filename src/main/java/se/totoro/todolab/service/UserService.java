@@ -1,6 +1,7 @@
 package se.totoro.todolab.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import se.totoro.todolab.model.User;
 import se.totoro.todolab.repository.UserRepository;
 import se.totoro.todolab.service.exceptions.InvalidUserException;
@@ -14,41 +15,38 @@ public final class UserService {
 
     private final UserRepository repository;
 
-    public UserService(UserRepository repository){
+    public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
-    public User createUser(User user){
+    public User createUser(User user) {
         validate(user);
         return repository.save(new User(user.getFirstName(), user.getLastName()));
     }
 
-    public Optional<User> getUserById(Long id){
+    public Optional<User> getUserById(Long id) {
         return repository.findById(id);
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         repository.findAll().forEach(users::add);
 
         return users;
     }
 
-    public Optional<User> deleteUserById(Long id){
+    public Optional<User> deleteUserById(Long id) {
         Optional<User> temp = repository.findById(id);
 
-        if(temp.isPresent()){
+        if (temp.isPresent()) {
             repository.deleteById(id);
         }
         return temp;
     }
 
-    private void validate(User user){
-        if(user.getFirstName() == null || user.getLastName() == null) {
+    private void validate(User user) {
+        if (user.getFirstName() == null || user.getLastName() == null || user.getFirstName().isEmpty() || user.getLastName().isEmpty()) {
             throw new InvalidUserException("You must type something");
         }
     }
-
-
-
 }
