@@ -61,6 +61,9 @@ public final class TodoResource {
         Stream<Todo> todoStream = todos.stream()
                 .filter(todo -> todo.getUser() != null)
                 .filter(todo -> todo.getUser().getId().equals(userId));
+        if(priority != null){
+            todoStream.filter(todo -> todo.getPriority().equals(priority));
+        }
         return Response.ok(todoStream.collect(Collectors.toList())).build();
     }
 
