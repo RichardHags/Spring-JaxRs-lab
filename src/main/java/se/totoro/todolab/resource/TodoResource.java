@@ -52,41 +52,19 @@ public final class TodoResource {
     }
 
     @GET
-    public Response getAllTodos(@QueryParam("user") Long userId, @QueryParam("priority") Integer priority) {
+    public Response getAllTodos(@QueryParam("user") final Long userId, @QueryParam("priority") final Integer priority) {
         List<Todo> todos = service.getAllTodos();
-        if(userId == null) {
+        if (userId == null) {
             return Response.ok(todos).build();
         }
-
-        Stream<Todo> todoStream = todos.stream()
+        todos = todos.stream()
                 .filter(todo -> todo.getUser() != null)
-                .filter(todo -> todo.getUser().getId().equals(userId));
-        if(priority != null){
-            todoStream.filter(todo -> todo.getPriority().equals(priority));
-        }
-        return Response.ok(todoStream.collect(Collectors.toList())).build();
+                .filter(todo -> todo.getUser().getId().equals(userId))
+                .filter(todo -> priority == null ? true : todo.getPriority().equals(priority))
+                .collect(Collectors.toList());
+
+        return Response.ok(todos).build();
     }
-
-
-
-    /*@GET
-    public Response getAll(@QueryParam("limit") @DefaultValue("5") int limit,
-                           @QueryParam("sort") @DefaultValue("asc") String sort,
-                           @QueryParam("links") @DefaultValue("false") boolean links) {
-        List<Customer> customers = service.getAllCustomers(limit, sort.equals("desc"));
-
-        if (links) {
-            List<String> customerLinks = customers.stream().map(c ->
-                    uriInfo.getAbsolutePathBuilder()
-                            .path(c.getId().toString())
-                            .build().toString())
-                    .collect(Collectors.toList());
-
-            return Response.ok(customerLinks).build();
-        }
-
-        return Response.ok(customers).build();
-    }*/
 
     @DELETE
     @Path("{id}")
