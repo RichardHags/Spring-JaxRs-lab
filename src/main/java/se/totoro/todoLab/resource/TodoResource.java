@@ -52,6 +52,8 @@ public final class TodoResource {
         return Response.ok(service.getAllTodos()).build();
     }
 
+
+
     /*@GET
     public Response getAll(@QueryParam("limit") @DefaultValue("5") int limit,
                            @QueryParam("sort") @DefaultValue("asc") String sort,
@@ -75,6 +77,15 @@ public final class TodoResource {
     @Path("{id}")
     public Response deleteTodo(@PathParam("id") Long id){
         return service.deleteTodoById(id)
+                .map(t -> Response.status(NO_CONTENT))
+                .orElse(Response.status(NOT_FOUND))
+                .build();
+    }
+
+    @PUT
+    @Path("{id}")
+    public Response assignUserToTodo(@QueryParam("user") @DefaultValue("0") Long userId, @PathParam("id") Long id){
+        return service.assignUserToTodo(id, userId)
                 .map(t -> Response.status(NO_CONTENT))
                 .orElse(Response.status(NOT_FOUND))
                 .build();

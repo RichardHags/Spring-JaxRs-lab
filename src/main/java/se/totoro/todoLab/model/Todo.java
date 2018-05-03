@@ -41,6 +41,10 @@ public final class Todo {
         return user;
     }
 
+    public void assignUser(User user){
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return String.format("Id:%s, description:%s, priority:%s", id, description, priority);

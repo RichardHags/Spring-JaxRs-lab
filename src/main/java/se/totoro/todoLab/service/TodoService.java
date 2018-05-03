@@ -2,14 +2,16 @@ package se.totoro.todoLab.service;
 
 import org.springframework.stereotype.Service;
 import se.totoro.todoLab.model.Todo;
+import se.totoro.todoLab.model.User;
 import se.totoro.todoLab.repository.TodoRepository;
+import se.totoro.todoLab.service.exceptions.InvalidTodoException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TodoService {
+public final class TodoService {
 
     private final TodoRepository repository;
 
@@ -18,7 +20,7 @@ public class TodoService {
     }
 
     public Todo createTodo(Todo todo){
-        //Ha en koll här, som kollar att det stämmer?
+        validate(todo);
         return repository.save(new Todo(todo.getDescription(), todo.getPriority()));
     }
 
@@ -41,4 +43,27 @@ public class TodoService {
         }
         return temp;
     }
+
+    private void validate(Todo todo){
+        if (todo.getDescription() == null || todo.getPriority() == null){
+            throw new InvalidTodoException("You must type something");
+        }
+    }
+
+    public Optional<Todo> assignUserToTodo(Long id, Long userId){
+        Optional<User> user = repository.getByUserId(userId);
+        Optional<Todo> todo = repository.findById(id);
+
+        if(user.isPresent() && todo.isPresent()){
+            Todo temp = todo.get();
+            temp.assignUser(user.get());
+            repository.save(temp);
+
+            return todo;
+        } else {
+            throw new InvalidTodoException("Did not work");
+        }
+    }
+
+
 }

@@ -21,9 +21,6 @@ public final class UserResource {
     @Context
     UriInfo uriInfo;
 
-//    @Context
-//    HttpHeaders headers;
-
     private final UserService service;
 
     public UserResource(UserService service){
@@ -55,25 +52,6 @@ public final class UserResource {
     public Response getAllUsers(){
         return Response.ok(service.getAllUsers()).build();
     }
-
-    /*@GET
-    public Response getAll(@QueryParam("limit") @DefaultValue("5") int limit,
-                           @QueryParam("sort") @DefaultValue("asc") String sort,
-                           @QueryParam("links") @DefaultValue("false") boolean links) {
-        List<Customer> customers = service.getAllCustomers(limit, sort.equals("desc"));
-
-        if (links) {
-            List<String> customerLinks = customers.stream().map(c ->
-                    uriInfo.getAbsolutePathBuilder()
-                            .path(c.getId().toString())
-                            .build().toString())
-                    .collect(Collectors.toList());
-
-            return Response.ok(customerLinks).build();
-        }
-
-        return Response.ok(customers).build();
-    }*/
 
     @DELETE
     @Path("{id]")

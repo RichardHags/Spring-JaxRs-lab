@@ -3,6 +3,7 @@ package se.totoro.todoLab.service;
 import org.springframework.stereotype.Service;
 import se.totoro.todoLab.model.User;
 import se.totoro.todoLab.repository.UserRepository;
+import se.totoro.todoLab.service.exceptions.InvalidUserException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public final class UserService {
     }
 
     public User createUser(User user){
+        validate(user);
         return repository.save(new User(user.getFirstName(), user.getLastName()));
     }
 
@@ -39,6 +41,12 @@ public final class UserService {
             repository.deleteById(id);
         }
         return temp;
+    }
+
+    private void validate(User user){
+        if(user.getFirstName() == null || user.getLastName() == null) {
+            throw new InvalidUserException("You must type something");
+        }
     }
 
 
