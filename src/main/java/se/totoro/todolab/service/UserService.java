@@ -1,7 +1,6 @@
 package se.totoro.todolab.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import se.totoro.todolab.model.User;
 import se.totoro.todolab.repository.UserRepository;
 import se.totoro.todolab.service.exceptions.InvalidUserException;
@@ -46,7 +45,7 @@ public final class UserService {
 
     private void validate(User user) {
         if (user.getFirstName() == null || user.getLastName() == null || user.getFirstName().isEmpty() || user.getLastName().isEmpty()) {
-            throw new InvalidUserException("You must type something");
+            throw new InvalidUserException("Firstname and lastname can not be empty");
         }
     }
 }

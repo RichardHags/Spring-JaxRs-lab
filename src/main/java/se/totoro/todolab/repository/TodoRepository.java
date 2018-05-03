@@ -7,7 +7,7 @@ import se.totoro.todolab.model.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface TodoRepository extends CrudRepository<Todo, Long>{
+public interface TodoRepository extends CrudRepository<Todo, Long> {
 
     List<Todo> getAllByUserId(Long id);
 

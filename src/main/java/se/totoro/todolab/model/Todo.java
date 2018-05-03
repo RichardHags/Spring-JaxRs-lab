@@ -1,8 +1,6 @@
 package se.totoro.todolab.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -22,10 +20,10 @@ public final class Todo {
     @JsonBackReference
     private User user;
 
-    protected Todo(){
+    protected Todo() {
     }
 
-    public Todo(String description, Integer priority){
+    public Todo(String description, Integer priority) {
         this.description = description;
         this.priority = priority;
     }
@@ -46,7 +44,7 @@ public final class Todo {
         return user;
     }
 
-    public void assignUser(User user){
+    public void assignUser(User user) {
         this.user = user;
     }
 

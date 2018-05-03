@@ -17,12 +17,12 @@ public final class TodoService {
     private final TodoRepository repository;
     private final UserRepository userRepository;
 
-    public TodoService (TodoRepository repository, UserRepository userRepository){
+    public TodoService(TodoRepository repository, UserRepository userRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
     }
 
-    public Todo createTodo(Todo todo){
+    public Todo createTodo(Todo todo) {
         validate(todo);
         return repository.save(new Todo(todo.getDescription(), todo.getPriority()));
     }
@@ -31,7 +31,7 @@ public final class TodoService {
         return repository.findById(id);
     }
 
-    public List<Todo> getAllTodos(){
+    public List<Todo> getAllTodos() {
         List<Todo> todos = new ArrayList<>();
         repository.findAll().forEach(todos::add);
 
@@ -47,24 +47,24 @@ public final class TodoService {
         return temp;
     }
 
-    private void validate(Todo todo){
-        if (todo.getDescription() == null || todo.getPriority() == null){
-            throw new InvalidTodoException("You must type something");
+    private void validate(Todo todo) {
+        if (todo.getDescription() == null || todo.getPriority() == null || todo.getDescription().isEmpty()) {
+            throw new InvalidTodoException("Description and priority have to have values");
         }
     }
 
-    public Optional<Todo> assignUserToTodo(Long id, Long userId){
+    public Optional<Todo> assignTodoToUser(Long id, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         Optional<Todo> todo = repository.findById(id);
 
-        if(user.isPresent() && todo.isPresent()){
+        if (user.isPresent() && todo.isPresent()) {
             Todo temp = todo.get();
             temp.assignUser(user.get());
             repository.save(temp);
 
             return todo;
         } else {
-            throw new InvalidTodoException("Did not work");
+            throw new InvalidTodoException("Could not find a user or todo");
         }
     }
 
